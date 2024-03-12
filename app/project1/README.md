@@ -1,22 +1,23 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Tue Feb 13 2024 05:21:12 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sat Mar 09 2024 05:55:46 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
-|**App Generator Version**<br>1.12.3|
+|**App Generator Version**<br>1.12.5|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/service1/
 |**Module Name**<br>project1|
-|**Application Title**<br>Tab1|
+|**Application Title**<br>App Title|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.120.6|
+|**UI5 Version**<br>1.121.1|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
-|**Main Entity**<br>student|
+|**Main Entity**<br>school|
+|**Navigation Entity**<br>school_to_student|
 
 ## project1
 

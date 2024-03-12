@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros">
+	<VBox>
+		<Label text="Date" />
+			<DatePicker core:require="{ handler: 'project1/ext/fragment/DatePicker'}" change="handler.onPress" />
+	</VBox>
+</core:FragmentDefinition>

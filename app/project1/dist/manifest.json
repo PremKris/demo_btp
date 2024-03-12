@@ -1,0 +1,223 @@
+{
+    "_version": "1.59.0",
+    "sap.app": {
+        "id": "project1",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.12.5",
+            "toolsId": "ac5d8ce9-8543-49f3-a958-cfee1565b088"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/service1/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "object-display": {
+                    "semanticObject": "object",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.121.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "project1.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "schoolList",
+                    "target": "schoolList"
+                },
+                {
+                    "pattern": "school({key}):?query:",
+                    "name": "schoolObjectPage",
+                    "target": "schoolObjectPage"
+                },
+                {
+                    "pattern": "school({key})/school_to_student({key2}):?query:",
+                    "name": "studentObjectPage",
+                    "target": "studentObjectPage"
+                },
+                {
+                    "pattern": "school({key})/school_to_student({key2})/student_to_admission({key3}):?query:",
+                    "name": "school_school_to_student_student_to_admissionObjectPage",
+                    "target": "school_school_to_student_student_to_admissionObjectPage"
+                }
+            ],
+            "targets": {
+                "schoolList": {
+                    "type": "Component",
+                    "id": "schoolList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/school",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "school": {
+                                    "detail": {
+                                        "route": "schoolObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "schoolObjectPage": {
+                    "type": "Component",
+                    "id": "schoolObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "contextPath": "/school",
+                            "navigation": {
+                                "school_to_student": {
+                                    "detail": {
+                                        "route": "studentObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "studentObjectPage": {
+                    "type": "Component",
+                    "id": "studentObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "contextPath": "/school/school_to_student",
+                            "content": {
+                                "body": {
+                                    "sections": {}
+                                }
+                            },
+                            "navigation": {
+                                "student_to_admission": {
+                                    "detail": {
+                                        "route": "school_school_to_student_student_to_admissionObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "school_school_to_student_student_to_admissionObjectPage": {
+                    "type": "Component",
+                    "id": "school_school_to_student_student_to_admissionObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/school/school_to_student/student_to_admission",
+                            "navigation": {},
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "DatePicker": {
+                                            "template": "project1.ext.fragment.DatePicker",
+                                            "position": {
+                                                "placement": "After",
+                                                "anchor": "admissiondetails"
+                                            },
+                                            "title": "DatePicker",
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ObjectPage.ObjectPageController": {
+                        "controllerName": "project1.ext.controller.Date"
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    }
+}

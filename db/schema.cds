@@ -1,51 +1,29 @@
 namespace ns1;
 
 entity school_info {    //parent
-    key school_id : Int16;
-    key admissionid : UUID;
+    key school_id : String;
     school_name : String;
     schhol_address : String;
-    schhol_branch_code : String(2);
-    sch1 : Association to many student_info on sch1.school_id = school_id;
-    school_to_admission : Association to many admission_details on school_to_admission.admission_id = admissionid;
+    schhol_branch_code : String;
+    school_to_student : Composition of many student_info on school_to_student.school_id = school_id; 
 };
 
 entity student_info {     //child
-    key stud_id : UUID;
+    key stud_id : String;
+    key school_id : String;
     stud_name : String;
     stud_address : String;
-    stud_age : Int16;
-    school_id : Int16;
-    price : String;
-    stu1 : Association to one school_info on stu1.school_id = school_id;
+    stud_age : String;
+    schoolid_field : Association to one school_info on schoolid_field.school_id = school_id;
+    student_to_admission : Composition of many admission_details on student_to_admission.stud_id = stud_id;
+    // student_to_admission : Association to many admission_details on student_to_admission.stud_id = stud_id;
 };
 
 entity admission_details{
-    key admission_id : UUID;
-    student_id : String;
-    adm_field : Association to one school_info on adm_field.admissionid = admission_id;
+    key admission_id : String;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    key stud_id : String;
+    key school_id : String;
+    admission_day : String;
+    adm_field : Association to one student_info on adm_field.stud_id = stud_id;
+
 };
-
-entity Amount {
- key value : Decimal(10,3);
-//   amt : currency;
-}
-
-entity Currencies {
-   key  value1 : String(3);
-}
-
-entity pincode {
-  key country_code : String;
-  country : String;
-}
-
-entity Books {
-  key price : {
-    value : String;
-    name : String;
-  };
-}
-
-
-// define type currency : Association to one Currencies;

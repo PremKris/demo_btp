@@ -12,8 +12,8 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
-      "version": "1.12.3",
-      "toolsId": "87ae7046-ca6c-4975-bacf-dbed5f430a5d"
+      "version": "1.12.5",
+      "toolsId": "ac5d8ce9-8543-49f3-a958-cfee1565b088"
     },
     "dataSources": {
       "mainService": {
@@ -22,6 +22,19 @@
         "settings": {
           "annotations": [],
           "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "object-display": {
+          "semanticObject": "object",
+          "action": "display",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
         }
       }
     }
@@ -45,7 +58,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.6",
+      "minUI5Version": "1.121.1",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -83,30 +96,57 @@
       "css": []
     },
     "routing": {
-      "config": {},
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "studentList",
-          "target": "studentList"
+          "name": "schoolList",
+          "target": "schoolList"
         },
         {
-          "pattern": "student({key}):?query:",
+          "pattern": "school({key}):?query:",
+          "name": "schoolObjectPage",
+          "target": "schoolObjectPage"
+        },
+        {
+          "pattern": "school({key})/school_to_student({key2}):?query:",
           "name": "studentObjectPage",
           "target": "studentObjectPage"
+        },
+        {
+          "pattern": "school({key})/school_to_student({key2})/student_to_admission({key3}):?query:",
+          "name": "school_school_to_student_student_to_admissionObjectPage",
+          "target": "school_school_to_student_student_to_admissionObjectPage"
         }
       ],
       "targets": {
-        "studentList": {
+        "schoolList": {
           "type": "Component",
-          "id": "studentList",
+          "id": "schoolList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/student",
+              "contextPath": "/school",
               "variantManagement": "Page",
               "navigation": {
-                "student": {
+                "school": {
+                  "detail": {
+                    "route": "schoolObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "schoolObjectPage": {
+          "type": "Component",
+          "id": "schoolObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/school",
+              "navigation": {
+                "school_to_student": {
                   "detail": {
                     "route": "studentObjectPage"
                   }
@@ -122,8 +162,70 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/student"
+              "contextPath": "/school/school_to_student",
+              "content": {
+                "body": {
+                  "sections": {}
+                }
+              },
+              "navigation": {
+                "student_to_admission": {
+                  "detail": {
+                    "route": "school_school_to_student_student_to_admissionObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "student_to_admission/@com.sap.vocabularies.UI.v1.LineItem#admission1": {
+                  "columns": {
+                    "Hh": {
+                      "header": "fg",
+                      "position": {
+                        "anchor": "DataField::stud_id",
+                        "placement": "After"
+                      },
+                      "template": "project1.ext.fragment.Hh",
+                      "availability": "Hidden"
+                    }
+                  }
+                }
+              }
             }
+          }
+        },
+        "school_school_to_student_student_to_admissionObjectPage": {
+          "type": "Component",
+          "id": "school_school_to_student_student_to_admissionObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/school/school_to_student/student_to_admission",
+              "navigation": {},
+              "content": {
+                "body": {
+                  "sections": {
+                    "DatePicker": {
+                      "template": "project1.ext.fragment.DatePicker",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "admissiondetails"
+                      },
+                      "title": "DatePicker",
+                      "type": "XMLFragment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "project1.ext.controller.Date"
           }
         }
       }
